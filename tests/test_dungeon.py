@@ -8,7 +8,9 @@ def test_dungeon():
     assert dungeon.width == 10
     assert dungeon.height == 20
 
+
 def test_print_dungeon(capsys):
+    """A test to check the printing of the dungeon."""
     dungeon = Dungeon(width=20, height=10, random_seed=2)
     dungeon.print_dungeon()
     captured = capsys.readouterr()

@@ -33,7 +33,6 @@ class Dungeon(object):
             random.seed(random_seed)
 
         self._generate_rooms()
-        x = 0
 
     @property
     def width(self):
@@ -46,6 +45,7 @@ class Dungeon(object):
         return self._height
 
     def _generate_rooms(self):
+        """A function to generate random rooms."""
         for _ in range(self._room_attempts):
             x = random.randint(1, self._width - 1)
             y = random.randint(1, self._height - 1)
@@ -61,31 +61,31 @@ class Dungeon(object):
                     break
 
             in_dungeon = False
-            if not (not self._dungeon_rectangle.contains(new_room.x, new_room.y)
-                    or not self._dungeon_rectangle.contains(new_room.x_max, new_room.y_max)):
+            if not (not self._dungeon_rectangle.contains(new_room.x, new_room.y) or not
+                    self._dungeon_rectangle.contains(new_room.x_max, new_room.y_max)):
                 in_dungeon = True
             if not overlaps and in_dungeon:
                 self.rooms.append(new_room)
 
     def print_dungeon(self):
-        ROOM = ' '
-        WALL = 'X'
+        """A function to print the dungeon to standard out."""
+        dungeon_room = ' '
+        dungeon_wall = 'X'
 
         # Create Dungeon Base
         dungeon = []
-        for x in range(self._height):
-            row = [WALL for _ in range(self._width)]
+        for _ in range(self._height):
+            row = [dungeon_wall for _ in range(self._width)]
             dungeon.append(row)
 
         # Add Rooms
         for room in self.rooms:
             for x in range(room.x, room.x + room.width):
                 for y in range(room.y, room.y + room.height):
-                    dungeon[y][x] = ROOM
+                    dungeon[y][x] = dungeon_room
 
         # Print Room in dungeon
         for y in dungeon:
             for x in y:
                 print(x, end='')
             print('')
-
