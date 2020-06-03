@@ -20,7 +20,7 @@ jobs:
     steps:
       # Checkout Sources
       - name: Checkout Sources
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       # Setup Python
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
@@ -51,7 +51,7 @@ jobs:
     steps:
       # Checkout Sources
       - name: Checkout Sources
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       # Setup Python
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
