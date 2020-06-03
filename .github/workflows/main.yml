@@ -1,36 +1,68 @@
-# This is a basic workflow to help you get started with Actions
+# Dungeon Main CI
+name: Main
 
-name: CI
+on: [push, pull_request]
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    strategy:
-      matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
+
+  # Flake
+  flake:
+
+    name: Flake Python-${{ matrix.python-version }}
     runs-on: ${{ matrix.platform }}
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest]
+        python-version: [3.6, 3.7, 3.8]
+
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      # Checkout Sources
+      - name: Checkout Sources
+      - uses: actions/checkout@v2
+      # Setup Python
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      # Install Python Dependencies
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 flake8-bugbear flake8-docstrings flake8-import-order flake8-colors pep8-naming
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      # Run Flake
+      - name: Flake Code
+        run: flake8 .
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
+  # Tests
+  tests:
 
-    # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+    name: Tests On ${{ matrix.platform }}
+    runs-on: ${{ matrix.platform }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [3.6]
+
+    steps:
+      # Checkout Sources
+      - name: Checkout Sources
+      - uses: actions/checkout@v2
+      # Setup Python
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      # Install Python Dependencies
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest==5.4.1
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      # Run Tests
+      - name: Tests on ${{ matrix.platform }}
+        run: tox .
