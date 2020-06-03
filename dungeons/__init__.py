@@ -1,0 +1,8 @@
+"""__init__ file for the dungeons package.
+
+This file was generated on June 03, 2020
+"""
+__author__ = "Gage Larsen"
+__copyright__ = "Copyright: (c) Aquaveo 2020"
+__maintainer__ = "Gage Larsen"
+__email__ = "gagelarsen53@gmail.com"
