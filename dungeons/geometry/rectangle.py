@@ -89,8 +89,8 @@ class Rectangle(object):
         Returns:
             True if the point is contained in the rectangle, or False if it does not.
         """
-        if self.x_min < x < self.x_max:
-            if self.y_min < y < self.y_max:
+        if self.x_min <= x < self.x_max:
+            if self.y_min <= y < self.y_max:
                 return True
         return False
 
@@ -121,3 +121,10 @@ class Rectangle(object):
                 return False
 
         return True
+
+    def __eq__(self, other):
+        if type(other) is not Rectangle:
+            return False
+        if self is other:
+            return True
+        return self.x == other.x and self.y == other.y and self.width == other.width and self.height == other.height
