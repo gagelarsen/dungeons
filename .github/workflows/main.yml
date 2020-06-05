@@ -1,5 +1,5 @@
 # Dungeon Main CI
-name: Main
+name: Main-CI
 
 on: [push, pull_request]
 
