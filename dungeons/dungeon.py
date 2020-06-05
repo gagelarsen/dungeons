@@ -17,7 +17,7 @@ class Dungeon(object):
     """A class to contain all the information about a dungeon that will be generated."""
 
     DUNGEON_ROOM = ' '
-    DUNGEON_HALL = ' '
+    DUNGEON_HALL = '*'
     DUNGEON_WALL = 'X'
 
     def __init__(self, width, height, random_seed=None, room_attempts=100,
