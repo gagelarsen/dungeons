@@ -16,9 +16,9 @@ from dungeons.geometry.rectangle import Rectangle
 class Dungeon(object):
     """A class to contain all the information about a dungeon that will be generated."""
 
-    DUNGEON_ROOM = 'X'
-    DUNGEON_HALL = '*'
-    DUNGEON_WALL = ' '
+    DUNGEON_ROOM = ' '
+    DUNGEON_HALL = ' '
+    DUNGEON_WALL = 'X'
 
     def __init__(self, width, height, random_seed=None, room_attempts=100,
                  max_room_width=10, max_room_height=10, min_room_width=5,
