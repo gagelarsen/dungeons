@@ -148,23 +148,26 @@ def test_rectangles_does_not_overlap():
 
 
 def test_rectangles_equal():
+    """Test two rectangles are equal."""
     rectangle_1 = Rectangle(width=5, height=5, x=0, y=0)
     rectangle_2 = Rectangle(width=5, height=5, x=0, y=0)
     assert rectangle_1 == rectangle_2
 
 
 def test_rectangles_not_equal():
+    """Test two rectangles are not equal."""
     rectangle_1 = Rectangle(width=5, height=5, x=0, y=0)
     rectangle_2 = Rectangle(width=5, height=6, x=0, y=0)
     assert not rectangle_1 == rectangle_2
 
 
 def test_rectangles_same():
+    """Test two rectangles are equal if they are the same."""
     rectangle_1 = Rectangle(width=5, height=5, x=0, y=0)
     assert rectangle_1 == rectangle_1
 
 
 def test_rectangles_not_equal_different_type():
+    """Test rectangle doesn't match different type."""
     rectangle_1 = Rectangle(width=5, height=5, x=0, y=0)
     assert not rectangle_1 == 1
-

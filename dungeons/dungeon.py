@@ -16,9 +16,9 @@ from dungeons.geometry.rectangle import Rectangle
 class Dungeon(object):
     """A class to contain all the information about a dungeon that will be generated."""
 
-    DUNGEON_ROOM = ' '
+    DUNGEON_ROOM = 'X'
     DUNGEON_HALL = '*'
-    DUNGEON_WALL = 'X'
+    DUNGEON_WALL = ' '
 
     def __init__(self, width, height, random_seed=None, room_attempts=100,
                  max_room_width=10, max_room_height=10, min_room_width=5,
@@ -127,6 +127,7 @@ class Dungeon(object):
         Args:
             start_x: the starting x coordinate for the passageway.
             start_y: the starting y coordinate for the passageway.
+            last_direction: the last direction a passage was carved.
         """
         # Check if the cell can be carved
         if not self._can_carve_passage(start_x, start_y, last_direction):

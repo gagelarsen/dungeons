@@ -123,6 +123,7 @@ class Rectangle(object):
         return True
 
     def __eq__(self, other):
+        """The equal operator for a rectangle."""
         if type(other) is not Rectangle:
             return False
         if self is other:

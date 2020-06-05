@@ -11,14 +11,15 @@ def test_dungeon():
 
 
 def test_dungeon_randomness_max():
+    """A test to check the max of a dungeons randomness."""
     dungeon = Dungeon(width=10, height=20, randomness=10)
     assert dungeon.randomness == 1
 
 
 def test_dungeon_randomness_min():
+    """A test to check the min of a dungeons randomness."""
     dungeon = Dungeon(width=10, height=20, randomness=-4)
     assert dungeon.randomness == 0
-
 
 
 def test_print_dungeon(capsys):
