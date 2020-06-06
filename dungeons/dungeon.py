@@ -54,6 +54,9 @@ class Dungeon(object):
         self._carve_passages()
         self._open_rooms()
 
+        # Remove Dead Ends
+        self._remove_dead_ends()
+
     @property
     def width(self):
         """The width of the dungeon."""
@@ -246,6 +249,26 @@ class Dungeon(object):
                     not self._get_dungeon_cell(x, y + 1) == self.DUNGEON_WALL:
                 return False
         return True
+
+    def _remove_dead_ends(self):
+        """Remove maze dead ends."""
+        for y in range(0, self._height):
+            for x in range(0, self._width):
+                self._remove_dead_ends_helper(x, y)
+
+    def _remove_dead_ends_helper(self, x, y):
+        cell = self._get_dungeon_cell(x, y)
+        if cell == self.DUNGEON_HALL:
+            d_pad_directions = [x for x in directions.DPAD_DIRECTIONS]
+            connections = []
+            for direction in d_pad_directions:
+                connected_cell = self._get_dungeon_cell(x + direction.x, y + direction.y)
+                if connected_cell in [self.DUNGEON_HALL, self.DUNGEON_DOORWAY, self.DUNGEON_ROOM]:
+                    connections.append((x + direction.x, y + direction.y))
+            if len(connections) <= 1:
+                self._set_dungeon_cell(x, y, self.DUNGEON_WALL)
+                if len(connections) == 1:
+                    self._remove_dead_ends_helper(connections[0][0], connections[0][1])
 
     def print_dungeon(self):
         """A function to print the dungeon to standard out."""

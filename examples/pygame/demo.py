@@ -25,8 +25,8 @@ HEIGHT = 20
 MARGIN = 5
 
 # MY CODE
-dungeon_width = 20
-dungeon_height = 10
+dungeon_width = 35
+dungeon_height = 35
 dungeon = Dungeon(width=dungeon_width, height=dungeon_height, random_seed=2)
 
 # Create a 2 dimensional array. A two dimensional

@@ -38,7 +38,7 @@ def test_print_dungeon(capsys):
         'XX     X     X     X\n' \
         'XX     $     $     X\n' \
         'XX     XXXXXXX     X\n' \
-        'XX     X*****X     X\n' \
+        'XX     XXXXXXX     X\n' \
         'XXXXXXXXXXXXXXXXXXXX\n'
 
     assert captured.out == expected
