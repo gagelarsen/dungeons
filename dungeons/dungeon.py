@@ -19,6 +19,7 @@ class Dungeon(object):
     DUNGEON_ROOM = ' '
     DUNGEON_HALL = '*'
     DUNGEON_WALL = 'X'
+    DUNGEON_DOORWAY = '$'
 
     def __init__(self, width, height, random_seed=None, room_attempts=100,
                  max_room_width=10, max_room_height=10, min_room_width=5,
@@ -51,6 +52,7 @@ class Dungeon(object):
 
         # Add Passages
         self._carve_passages()
+        self._open_rooms()
 
     @property
     def width(self):
@@ -180,6 +182,68 @@ class Dungeon(object):
                         continue
             # Check the coordinates are a wall
             if not self._get_dungeon_cell(x + direction.x, y + direction.y) == self.DUNGEON_WALL:
+                return False
+        return True
+
+    def _open_rooms(self):
+        """A function to open the rooms to the passageways."""
+        # Loop Through Rooms
+        for room in self.rooms:
+            possible_directions = [x for x in directions.DPAD_DIRECTIONS]
+            multiple_openings = random.random() > 0.75
+            has_opening = False
+            while len(possible_directions) > 0:
+                direction = possible_directions[random.randint(0, len(possible_directions) - 1)]
+                possible_directions.remove(direction)
+
+                possible_locations = []
+                if direction == directions.UP:
+                    possible_locations = [(x, room.y_min - 1)
+                                          for x in range(room.x_min, room.x_max)]
+                elif direction == directions.DOWN:
+                    possible_locations = [(x, room.y_max)
+                                          for x in range(room.x_min, room.x_max)]
+                elif direction == directions.LEFT:
+                    possible_locations = [(room.x_min - 1, y)
+                                          for y in range(room.y_min, room.y_max)]
+                elif direction == directions.RIGHT:
+                    possible_locations = [(room.x_max, y)
+                                          for y in range(room.y_min, room.y_max)]
+
+                # Loop through random locations till you find one that can be opened.
+                while len(possible_locations) > 0:
+                    location = possible_locations[random.randint(0, len(possible_locations) - 1)]
+                    possible_locations.remove(location)
+                    if self._can_carve_entry(location[0], location[1], direction):
+                        self._set_dungeon_cell(location[0], location[1], self.DUNGEON_DOORWAY)
+                        has_opening = True
+                        break
+
+                # Break if done
+                if has_opening and not multiple_openings:
+                    break
+
+    def _can_carve_entry(self, x, y, incoming_direction):
+        # Is the cell I am trying to change a wall
+        if self._get_dungeon_cell(x, y) != self.DUNGEON_WALL:
+            return False
+
+        # Is the next cell in the rectangle
+        if not self._dungeon_rectangle.contains(x + incoming_direction.x, y + incoming_direction.y):
+            return False
+
+        # Does the room I am trying to change connect to a room or hall?
+        if not self._get_dungeon_cell(x + incoming_direction.x, y + incoming_direction.y) == self.DUNGEON_HALL and \
+                not self._get_dungeon_cell(x + incoming_direction.x, y + incoming_direction.y) == self.DUNGEON_ROOM:
+            return False
+
+        if incoming_direction == directions.UP or incoming_direction == directions.DOWN:
+            if not self._get_dungeon_cell(x - 1, y) == self.DUNGEON_WALL or \
+                    not self._get_dungeon_cell(x + 1, y) == self.DUNGEON_WALL:
+                return False
+        if incoming_direction == directions.LEFT or incoming_direction == directions.RIGHT:
+            if not self._get_dungeon_cell(x, y - 1) == self.DUNGEON_WALL or \
+                    not self._get_dungeon_cell(x, y + 1) == self.DUNGEON_WALL:
                 return False
         return True
 

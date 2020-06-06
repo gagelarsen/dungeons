@@ -2,7 +2,9 @@
 """Setup.py for the dungeons project."""
 from setuptools import find_packages, setup
 
-install_requirements = []
+install_requirements = [
+    'pygame',
+]
 
 setup_requirements = []
 

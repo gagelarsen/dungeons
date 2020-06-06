@@ -32,12 +32,19 @@ def test_print_dungeon(capsys):
         'XXXXXXXXXXXXXXXXXXXX\n' \
         'XXXXXXXXXXXXXXXXXXXX\n' \
         'XX     X     X     X\n' \
+        'XX     X     $     X\n' \
         'XX     X     X     X\n' \
         'XX     X     X     X\n' \
-        'XX     X     X     X\n' \
-        'XX     X     X     X\n' \
+        'XX     $     $     X\n' \
         'XX     XXXXXXX     X\n' \
         'XX     X*****X     X\n' \
         'XXXXXXXXXXXXXXXXXXXX\n'
 
     assert captured.out == expected
+
+
+def test_can_open_room_cell_is_not_a_wall():
+    """Test you can't open a door outside of the dungeon."""
+    dungeon = Dungeon(width=20, height=10, random_seed=2)
+    can_carve = dungeon._can_carve_entry(2, 2, None)
+    assert can_carve is False
