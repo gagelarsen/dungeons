@@ -1,5 +1,6 @@
 """Tests for the generate functionality of the dungeons package."""
 from dungeons.dungeon import Dungeon
+from dungeons.geometry import directions
 
 
 def test_dungeon():
@@ -47,4 +48,12 @@ def test_can_open_room_cell_is_not_a_wall():
     """Test you can't open a door outside of the dungeon."""
     dungeon = Dungeon(width=20, height=10, random_seed=2)
     can_carve = dungeon._can_carve_entry(2, 2, None)
+    assert can_carve is False
+
+
+def test_can_open_room_cell_is_not_next_to_walls():
+    """Test you can't open a door outside of the dungeon."""
+    dungeon = Dungeon(width=20, height=10, random_seed=2)
+    dungeon._set_dungeon_cell(7, 3, dungeon.DUNGEON_ROOM)
+    can_carve = dungeon._can_carve_entry(7, 2, directions.DOWN)
     assert can_carve is False
