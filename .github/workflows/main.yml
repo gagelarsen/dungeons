@@ -45,7 +45,7 @@ jobs:
       fail-fast: false
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: [3.6]
+        python-version: [3.6, 3.7, 3.8]
 
     steps:
       # Checkout Sources
@@ -62,5 +62,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest==5.4.1 tox
       # Run Tests
-      - name: Tests on ${{ matrix.platform }}
+      - name: Tests on ${{ matrix.platform }} - Python ${{ matrix.python-version }}
         run: tox .
