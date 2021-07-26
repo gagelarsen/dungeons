@@ -2,89 +2,86 @@
 
 This file was generated on June 03, 2020
 """
-__author__ = "Gage Larsen"
-__copyright__ = "Copyright: gagelarsen 2020"
-__maintainer__ = "Gage Larsen"
-__email__ = "gagelarsen53@gmail.com"
+from typing import Tuple
 
 
 class Rectangle(object):
     """A class for basic rectangle functions."""
-    def __init__(self, height, width, x=0, y=0):
+    def __init__(self, height: int, width: int, x: int = 0, y: int = 0) -> None:
         """The __init__ function for the Rectangle class."""
-        self._height = height
-        self._width = width
-        self._x = x
-        self._y = y
+        self._height: int = height
+        self._width: int = width
+        self._x: int = x
+        self._y: int = y
 
     @property
-    def height(self):
+    def height(self) -> int:
         """The height of the rectangle."""
         return self._height
 
     @property
-    def width(self):
+    def width(self) -> int:
         """The width of the rectangle."""
         return self._width
 
     @property
-    def x(self):
+    def x(self) -> int:
         """The upper left corner x coordinate."""
         return self._x
 
     @property
-    def y(self):
+    def y(self) -> int:
         """The upper left corner y coordinate."""
         return self._y
 
     @property
-    def area(self):
+    def area(self) -> int:
         """The area of the rectangle."""
         return self._height * self._width
 
     @property
-    def center(self):
+    def center(self) -> Tuple[int, int]:
         """The (x, y) coordinates of the center of the rectangle."""
-        x = (self.x_min + self.x_max) / 2
-        y = (self.y_min + self.y_max) / 2
+        x = int((self.x_min + self.x_max) / 2)
+        y = int((self.y_min + self.y_max) / 2)
         return x, y
 
     @property
-    def position(self):
+    def position(self) -> Tuple[int, int]:
         """The (x, y) coordinates of the top left corner of the rectangle."""
         return self._x, self._y
 
     @property
-    def size(self):
+    def size(self) -> Tuple[int, int]:
         """The (width, height) of the rectangle."""
         return self._width, self._height
 
     @property
-    def x_max(self):
+    def x_max(self) -> int:
         """The maximum x coordinate of the rectangle."""
         return self._x + self._width
 
     @property
-    def x_min(self):
+    def x_min(self) -> int:
         """The minimum x coordinate of the rectangle."""
         return self._x
 
     @property
-    def y_max(self):
+    def y_max(self) -> int:
         """The maximum y coordinate of the rectangle."""
         return self._y + self._height
 
     @property
-    def y_min(self):
+    def y_min(self) -> int:
         """The minimum y coordinate of the rectangle."""
         return self._y
 
-    def contains(self, x, y):
+    def contains(self, x: int, y: int) -> bool:
         """Check if the rectangle contains the point at the given x and y coordinates.
 
         Args:
-            x: The x coordinate of a point
-            y: The y coordinate of a point
+            x (int): The x coordinate of a point
+            y (int): The y coordinate of a point
 
         Returns:
             True if the point is contained in the rectangle, or False if it does not.
@@ -94,11 +91,12 @@ class Rectangle(object):
                 return True
         return False
 
-    def overlaps(self, rect, can_touch=False):
+    def overlaps(self, rect: 'Rectangle', can_touch: bool = False) -> bool:
         """Check if a rectangle overlaps with another rectangle.
 
         Args:
-            rect: A rectangle
+            rect (Rectangle): A rectangle
+            can_touch (bool): Are the rectangles considered overlapping if they touch.
 
         Returns:
             True if the given rectangle overlaps or touches this rectangle, or False if it does not.
@@ -122,7 +120,7 @@ class Rectangle(object):
 
         return True
 
-    def __eq__(self, other):
+    def __eq__(self, other: 'Rectangle') -> bool:
         """The equal operator for a rectangle."""
         if type(other) is not Rectangle:
             return False

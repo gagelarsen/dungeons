@@ -2,16 +2,18 @@
 
 This file was generated on June 04, 2020
 """
-__author__ = "Gage Larsen"
-__copyright__ = "Copyright: gagelarsen 2020"
-__maintainer__ = "Gage Larsen"
-__email__ = "gagelarsen53@gmail.com"
 
 
 class Direction(object):
     """A class to hold information about directions used the dungeon generator."""
-    def __init__(self, x, y):
-        """__init__ function for the Direction class."""
+    def __init__(self, x: int, y: int) -> None:
+        """
+        __init__ function for the Direction class.
+
+        Args:
+            x: The direction x.
+            y: The direction y.
+        """
         self.x = x
         self.y = y
 

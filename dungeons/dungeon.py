@@ -2,11 +2,6 @@
 
 This file was generated on June 03, 2020
 """
-__author__ = "Gage Larsen"
-__copyright__ = "Copyright: gagelarsen 2020"
-__maintainer__ = "Gage Larsen"
-__email__ = "gagelarsen53@gmail.com"
-
 import random
 
 from dungeons.geometry import directions
@@ -21,10 +16,23 @@ class Dungeon(object):
     DUNGEON_WALL = 'X'
     DUNGEON_DOORWAY = '$'
 
-    def __init__(self, width, height, random_seed=None, room_attempts=100,
-                 max_room_width=10, max_room_height=10, min_room_width=5,
-                 min_room_height=5, randomness=0.5):
-        """The __init__ function for the Dungeon class."""
+    def __init__(self, width: int, height: int, random_seed: int = None, room_attempts: int = 100,
+                 max_room_width: int = 10, max_room_height: int = 10, min_room_width: int = 5,
+                 min_room_height: int = 5, randomness: float = 0.5) -> None:
+        """
+        The __init__ function for the Dungeon class.
+
+        Args:
+            width (int): Width of the dungeon.
+            height (int): Height of the dungeon.
+            random_seed (int): Seed for the dungeon.
+            room_attempts (int): Number of attempts to make rooms.
+            max_room_width (int): Max room width.
+            max_room_height (int): Max room height.
+            min_room_width (int): Minimum room width.
+            min_room_height (int): Minimum room height.
+            randomness (float): Percentage of randomness 0 to 100.
+        """
         self._width = width
         self._height = height
         self._room_attempts = room_attempts
@@ -58,17 +66,17 @@ class Dungeon(object):
         self._remove_dead_ends()
 
     @property
-    def width(self):
+    def width(self) -> int:
         """The width of the dungeon."""
         return self._width
 
     @property
-    def height(self):
+    def height(self) -> int:
         """The height of the dungeon."""
         return self._height
 
     @property
-    def randomness(self):
+    def randomness(self) -> float:
         """The randomness of the dungeon passages."""
         if self._randomness > 1:
             return 1
@@ -76,21 +84,30 @@ class Dungeon(object):
             return 0
         return self._randomness
 
-    def _set_dungeon_cell(self, x, y, value):
+    def _set_dungeon_cell(self, x: int, y: int, value: str) -> None:
         """A function to set the value of a specified dungeon cell.
 
         Args:
-            x: The specified x coordinate.
-            y: The specified y coordinate.
-            value: The new value of the cell.
+            x (int): The specified x coordinate.
+            y (int): The specified y coordinate.
+            value (str): The new value of the cell.
         """
         self.dungeon[y][x] = value
 
-    def _get_dungeon_cell(self, x, y):
-        """A function to get the value of a specified dungeon cell."""
+    def _get_dungeon_cell(self, x: int, y: int) -> str:
+        """
+        A function to get the value of a specified dungeon cell.
+
+        Args:
+            x (int): The x location of the dungeon.
+            y (int): The y location of the dungeon.
+
+        Returns:
+            str: The string value at the x, y location.
+        """
         return self.dungeon[y][x]
 
-    def _generate_rooms(self):
+    def _generate_rooms(self) -> None:
         """A function to generate random rooms."""
         for _ in range(self._room_attempts):
             # Get Random Dimensions for New Room
@@ -119,20 +136,20 @@ class Dungeon(object):
                 for y in range(room.y, room.y + room.height):
                     self._set_dungeon_cell(x, y, self.DUNGEON_ROOM)
 
-    def _carve_passages(self):
+    def _carve_passages(self) -> None:
         """A function to carve passages in the maze."""
         # Loop through the dungeon to create maze.
         for y in range(1, self._height):
             for x in range(1, self._width):
                 self._carve_passage_helper(x, y)
 
-    def _carve_passage_helper(self, start_x, start_y, last_direction=None):
+    def _carve_passage_helper(self, start_x: int, start_y: int, last_direction: directions.Direction = None) -> None:
         """A helper for carving the dungeon passages.
 
         Args:
-            start_x: the starting x coordinate for the passageway.
-            start_y: the starting y coordinate for the passageway.
-            last_direction: the last direction a passage was carved.
+            start_x (int): the starting x coordinate for the passageway.
+            start_y (int): the starting y coordinate for the passageway.
+            last_direction (directions.Direction): the last direction a passage was carved.
         """
         # Check if the cell can be carved
         if not self._can_carve_passage(start_x, start_y, last_direction):
@@ -156,13 +173,13 @@ class Dungeon(object):
             available_directions.remove(new_direction)
             self._carve_passage_helper(start_x + new_direction.x, start_y + new_direction.y, new_direction)
 
-    def _can_carve_passage(self, x, y, incoming_direction=None):
+    def _can_carve_passage(self, x: int, y: int, incoming_direction: directions.Direction = None) -> bool:
         """Determine if a passage can be carved at a specified location in the dungeon.
 
         Args:
-            x: the x coordinate of the cell to check
-            y: the y coordinate of the cell to check
-            incoming_direction: The direction that the passage has been moving.
+            x (int): the x coordinate of the cell to check
+            y (int): the y coordinate of the cell to check
+            incoming_direction (directions.Direction): The direction that the passage has been moving.
 
         Returns:
             True if the cell can be carved, or false if it cannot.
@@ -188,7 +205,7 @@ class Dungeon(object):
                 return False
         return True
 
-    def _open_rooms(self):
+    def _open_rooms(self) -> None:
         """A function to open the rooms to the passageways."""
         # Loop Through Rooms
         for room in self.rooms:
@@ -226,7 +243,18 @@ class Dungeon(object):
                 if has_opening and not multiple_openings:
                     break
 
-    def _can_carve_entry(self, x, y, incoming_direction):
+    def _can_carve_entry(self, x: int, y: int, incoming_direction: directions.Direction) -> bool:
+        """
+        Check if an entry can be carved.
+
+        Args:
+            x (int): The x location to check.
+            y (int): The y location to check.
+            incoming_direction (directions.Direction): The incoming direction.
+
+        Returns:
+            bool: If an entry can be carved.
+        """
         # Is the cell I am trying to change a wall
         if self._get_dungeon_cell(x, y) != self.DUNGEON_WALL:
             return False
@@ -250,13 +278,20 @@ class Dungeon(object):
                 return False
         return True
 
-    def _remove_dead_ends(self):
+    def _remove_dead_ends(self) -> None:
         """Remove maze dead ends."""
         for y in range(0, self._height):
             for x in range(0, self._width):
                 self._remove_dead_ends_helper(x, y)
 
-    def _remove_dead_ends_helper(self, x, y):
+    def _remove_dead_ends_helper(self, x: int, y: int) -> None:
+        """
+        Helper for removing dead ends.
+
+        Args:
+            x: x location to remove dead ends.
+            y: y location to remove dead ends.
+        """
         cell = self._get_dungeon_cell(x, y)
         if cell == self.DUNGEON_HALL:
             d_pad_directions = [x for x in directions.DPAD_DIRECTIONS]
@@ -270,7 +305,7 @@ class Dungeon(object):
                 if len(connections) == 1:
                     self._remove_dead_ends_helper(connections[0][0], connections[0][1])
 
-    def print_dungeon(self):
+    def print_dungeon(self) -> None:
         """A function to print the dungeon to standard out."""
         # Print Room in dungeon
         for y in range(0, self._height):
