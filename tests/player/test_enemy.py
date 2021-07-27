@@ -4,7 +4,7 @@ Tests for the enemy class.
 This file was created on July 27, 2021
 """
 from dungeons.geometry import directions
-from dungeons.player import Enemy
+from dungeons.pieces import Enemy
 
 
 def test_basic_enemy() -> None:

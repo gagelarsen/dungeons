@@ -4,7 +4,7 @@ Tests for the player class.
 This file was created on July 27, 2021
 """
 from dungeons.geometry import directions
-from dungeons.player import Player
+from dungeons.pieces import Player
 
 
 def test_basic_player() -> None:
