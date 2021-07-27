@@ -10,12 +10,14 @@ __email__ = "gagelarsen53@gmail.com"
 import pygame
 
 from dungeons.dungeon import Dungeon
+from dungeons.geometry import directions
 
 # Define some colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+BLUE = (0, 64, 255)
 
 # This sets the WIDTH and HEIGHT of each grid location
 WIDTH = 20
@@ -27,7 +29,7 @@ MARGIN = 5
 # MY CODE
 dungeon_width = 35
 dungeon_height = 35
-dungeon = Dungeon(width=dungeon_width, height=dungeon_height, random_seed=2)
+dungeon = Dungeon(width=dungeon_width, height=dungeon_height, random_seed=2, has_player=True)
 
 # Create a 2 dimensional array. A two dimensional
 # array is simply a list of lists.
@@ -73,9 +75,19 @@ while not done:
             column = pos[0] // (WIDTH + MARGIN)
             row = pos[1] // (HEIGHT + MARGIN)
             # Set that location to one
-            dungeon = Dungeon(35, 35)
+            dungeon = Dungeon(35, 35, has_player=True)
             grid = dungeon.dungeon
             print("Click ", pos, "Grid coordinates: ", row, column)
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_UP:
+                dungeon.move_player(directions.UP)
+            elif event.key == pygame.K_DOWN:
+                dungeon.move_player(directions.DOWN)
+            elif event.key == pygame.K_LEFT:
+                dungeon.move_player(directions.LEFT)
+            elif event.key == pygame.K_RIGHT:
+                dungeon.move_player(directions.RIGHT)
+
 
     # Set the screen background
     screen.fill(BLACK)
@@ -96,6 +108,11 @@ while not done:
                               (MARGIN + HEIGHT) * row + MARGIN,
                               WIDTH,
                               HEIGHT])
+    if dungeon.has_player:
+        pygame.draw.rect(screen, BLUE,
+                         [(MARGIN + WIDTH) * dungeon.player.x + MARGIN,
+                          (MARGIN + HEIGHT) * dungeon.player.y + MARGIN,
+                          WIDTH, HEIGHT])
 
     # Limit to 60 frames per second
     clock.tick(60)
