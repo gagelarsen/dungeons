@@ -88,7 +88,6 @@ while not done:
             elif event.key == pygame.K_RIGHT:
                 dungeon.move_player(directions.RIGHT)
 
-
     # Set the screen background
     screen.fill(BLACK)
 
