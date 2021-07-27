@@ -6,6 +6,7 @@ import random
 
 from dungeons.geometry import directions
 from dungeons.geometry.rectangle import Rectangle
+from dungeons.player import Player
 
 
 class Dungeon(object):
@@ -15,10 +16,11 @@ class Dungeon(object):
     DUNGEON_HALL = '*'
     DUNGEON_WALL = 'X'
     DUNGEON_DOORWAY = '$'
+    PLAYER_PIECE = 'P'
 
     def __init__(self, width: int, height: int, random_seed: int = None, room_attempts: int = 100,
                  max_room_width: int = 10, max_room_height: int = 10, min_room_width: int = 5,
-                 min_room_height: int = 5, randomness: float = 0.5) -> None:
+                 min_room_height: int = 5, randomness: float = 0.5, has_player: bool = False) -> None:
         """
         The __init__ function for the Dungeon class.
 
@@ -32,6 +34,7 @@ class Dungeon(object):
             min_room_width (int): Minimum room width.
             min_room_height (int): Minimum room height.
             randomness (float): Percentage of randomness 0 to 100.
+            has_player (bool): Is there a player in this dungeon.
         """
         self._width = width
         self._height = height
@@ -45,7 +48,9 @@ class Dungeon(object):
         self._randomness = randomness
 
         self._dungeon_rectangle = Rectangle(width=self._width, height=self._height)
-        self.rooms = []
+        self._rooms = []
+
+        self._has_player = has_player
 
         if random_seed is not None:
             random.seed(random_seed)
@@ -65,6 +70,10 @@ class Dungeon(object):
         # Remove Dead Ends
         self._remove_dead_ends()
 
+        self._player = None
+        if self.has_player:
+            self.add_player()
+
     @property
     def width(self) -> int:
         """The width of the dungeon."""
@@ -83,6 +92,16 @@ class Dungeon(object):
         if self._randomness < 0:
             return 0
         return self._randomness
+
+    @property
+    def has_player(self) -> bool:
+        """Does this dungeon have a player object."""
+        return self._has_player
+
+    @property
+    def player(self) -> Player:
+        """This dungeons player object."""
+        return self._player
 
     def _set_dungeon_cell(self, x: int, y: int, value: str) -> None:
         """A function to set the value of a specified dungeon cell.
@@ -119,7 +138,7 @@ class Dungeon(object):
 
             # Make sure the room doesn't overlap other rooms
             overlaps = False
-            for room in self.rooms:
+            for room in self._rooms:
                 if room.overlaps(new_room):
                     overlaps = True
                     break
@@ -129,9 +148,9 @@ class Dungeon(object):
                     self._dungeon_rectangle.contains(new_room.x_max, new_room.y_max)):
                 in_dungeon = True
             if not overlaps and in_dungeon:
-                self.rooms.append(new_room)
+                self._rooms.append(new_room)
         # Add Rooms to Dungeons
-        for room in self.rooms:
+        for room in self._rooms:
             for x in range(room.x, room.x + room.width):
                 for y in range(room.y, room.y + room.height):
                     self._set_dungeon_cell(x, y, self.DUNGEON_ROOM)
@@ -208,7 +227,7 @@ class Dungeon(object):
     def _open_rooms(self) -> None:
         """A function to open the rooms to the passageways."""
         # Loop Through Rooms
-        for room in self.rooms:
+        for room in self._rooms:
             possible_directions = [x for x in directions.DPAD_DIRECTIONS]
             multiple_openings = random.random() > 0.75
             has_opening = False
@@ -312,3 +331,37 @@ class Dungeon(object):
             for x in range(0, self._width):
                 print(self._get_dungeon_cell(x, y), end='')
             print('')
+
+    def add_player(self) -> None:
+        """Add a player to the dungeon."""
+        room_number = random.randint(0, len(self._rooms) - 1)
+        room = self._rooms[room_number]
+        self._player = Player(x=room.x, y=room.y, name='main_player')
+
+    def _player_can_move(self, direction: directions.Direction) -> bool:
+        """
+        Can the player move in a specified direction.
+
+        Args:
+            direction (directions.Direction): Direction the player wants to move.
+
+        Returns:
+            True if the player can move, False otherwise.
+        """
+        destination_x = self.player.x + direction.x
+        destination_y = self.player.y + direction.y
+        destination = self._get_dungeon_cell(destination_x, destination_y)
+
+        if destination in [self.DUNGEON_WALL, self.PLAYER_PIECE]:
+            return False
+        return True
+
+    def move_player(self, direction: directions.Direction) -> None:
+        """
+        Move the dungeon players position.
+
+        Args:
+            direction (direction.Direction): The direction to move the player.
+        """
+        if self._player_can_move(direction):
+            self.player.move_player(direction)

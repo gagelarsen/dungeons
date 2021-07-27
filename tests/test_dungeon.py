@@ -57,3 +57,40 @@ def test_can_open_room_cell_is_not_next_to_walls() -> None:
     dungeon._set_dungeon_cell(7, 3, dungeon.DUNGEON_ROOM)
     can_carve = dungeon._can_carve_entry(7, 2, directions.DOWN)
     assert can_carve is False
+
+
+def test_dungeon_with_player() -> None:
+    """Test the dungeon with the player."""
+    dungeon = Dungeon(width=20, height=10, random_seed=2, has_player=True)
+    assert dungeon.player.x == 8
+    assert dungeon.player.y == 2
+
+
+def test_player_can_move() -> None:
+    """Test the player can move function."""
+    dungeon = Dungeon(width=20, height=10, random_seed=2, has_player=True)
+    can_move_left = dungeon._player_can_move(directions.LEFT)
+    assert can_move_left is False
+    can_move_right = dungeon._player_can_move(directions.RIGHT)
+    assert can_move_right is True
+
+
+def test_move_player() -> None:
+    """Test moving the player."""
+    dungeon = Dungeon(width=20, height=10, random_seed=2, has_player=True)
+
+    dungeon.move_player(directions.LEFT)
+    assert dungeon.player.x == 8
+    assert dungeon.player.y == 2
+
+    dungeon.move_player(directions.RIGHT)
+    assert dungeon.player.x == 9
+    assert dungeon.player.y == 2
+
+    dungeon.move_player(directions.UP)
+    assert dungeon.player.x == 9
+    assert dungeon.player.y == 2
+
+    dungeon.move_player(directions.DOWN)
+    assert dungeon.player.x == 9
+    assert dungeon.player.y == 3
