@@ -36,7 +36,7 @@ class Player(object):
         """Players y location."""
         return self._y
 
-    def move_player(self, direction: Direction) -> None:
+    def move(self, direction: Direction) -> None:
         """
         Move the players current position.
 

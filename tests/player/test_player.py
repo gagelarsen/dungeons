@@ -19,18 +19,18 @@ def test_move_player() -> None:
     """Test moving the player."""
     player = Player(x=50, y=50, name='moving_player')
 
-    player.move_player(directions.UP)
+    player.move(directions.UP)
     assert player.x == 50
     assert player.y == 49
 
-    player.move_player(directions.LEFT)
+    player.move(directions.LEFT)
     assert player.x == 49
     assert player.y == 49
 
-    player.move_player(directions.DOWN)
+    player.move(directions.DOWN)
     assert player.x == 49
     assert player.y == 50
 
-    player.move_player(directions.RIGHT)
+    player.move(directions.RIGHT)
     assert player.x == 50
     assert player.y == 50
