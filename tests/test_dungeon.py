@@ -94,3 +94,18 @@ def test_move_player() -> None:
     dungeon.move_player(directions.DOWN)
     assert dungeon.player.x == 9
     assert dungeon.player.y == 3
+
+
+def test_dungeon_has_enemies_no_player() -> None:
+    """Test dungeon has enemies and no player."""
+    dungeon = Dungeon(width=20, height=10, random_seed=2, has_enemies=True)
+    assert isinstance(dungeon.enemies, list)
+    assert len(dungeon.enemies) > 0
+
+
+def test_dungeon_has_enemies_with_player() -> None:
+    """Test dungeon has enemies and no player."""
+    dungeon = Dungeon(width=20, height=10, random_seed=2,
+                      has_player=True, has_enemies=True)
+    assert isinstance(dungeon.enemies, list)
+    assert len(dungeon.enemies) > 0
