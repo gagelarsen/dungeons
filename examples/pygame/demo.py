@@ -18,6 +18,7 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0, 64, 255)
+BROWN = (165, 42, 42)
 
 # This sets the WIDTH and HEIGHT of each grid location
 WIDTH = 20
@@ -29,7 +30,7 @@ MARGIN = 5
 # MY CODE
 dungeon_width = 35
 dungeon_height = 35
-dungeon = Dungeon(width=dungeon_width, height=dungeon_height, random_seed=2, has_player=True)
+dungeon = Dungeon(width=dungeon_width, height=dungeon_height, random_seed=2, has_player=True, has_enemies=True)
 
 # Create a 2 dimensional array. A two dimensional
 # array is simply a list of lists.
@@ -75,7 +76,7 @@ while not done:
             column = pos[0] // (WIDTH + MARGIN)
             row = pos[1] // (HEIGHT + MARGIN)
             # Set that location to one
-            dungeon = Dungeon(35, 35, has_player=True)
+            dungeon = Dungeon(35, 35, has_player=True, has_enemies=True)
             grid = dungeon.dungeon
             print("Click ", pos, "Grid coordinates: ", row, column)
         elif event.type == pygame.KEYUP:
@@ -100,7 +101,7 @@ while not done:
             if grid[row][column] == dungeon.DUNGEON_ROOM:
                 color = WHITE
             if grid[row][column] == dungeon.DUNGEON_DOORWAY:
-                color = RED
+                color = BROWN
             pygame.draw.rect(screen,
                              color,
                              [(MARGIN + WIDTH) * column + MARGIN,
@@ -112,6 +113,12 @@ while not done:
                          [(MARGIN + WIDTH) * dungeon.player.x + MARGIN,
                           (MARGIN + HEIGHT) * dungeon.player.y + MARGIN,
                           WIDTH, HEIGHT])
+    if dungeon.has_enemies:
+        for enemy in dungeon.enemies:
+            pygame.draw.rect(screen, RED,
+                             [(MARGIN + WIDTH) * enemy.x + MARGIN,
+                              (MARGIN + HEIGHT) * enemy.y + MARGIN,
+                              WIDTH, HEIGHT])
 
     # Limit to 60 frames per second
     clock.tick(60)
