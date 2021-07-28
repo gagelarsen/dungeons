@@ -3,10 +3,11 @@
 This file was generated on June 03, 2020
 """
 import random
+from typing import List
 
 from dungeons.geometry import directions
 from dungeons.geometry.rectangle import Rectangle
-from dungeons.player import Player
+from dungeons.pieces import Enemy, Player
 
 
 class Dungeon(object):
@@ -17,10 +18,12 @@ class Dungeon(object):
     DUNGEON_WALL = 'X'
     DUNGEON_DOORWAY = '$'
     PLAYER_PIECE = 'P'
+    ENEMY_PIECE = 'E'
 
     def __init__(self, width: int, height: int, random_seed: int = None, room_attempts: int = 100,
                  max_room_width: int = 10, max_room_height: int = 10, min_room_width: int = 5,
-                 min_room_height: int = 5, randomness: float = 0.5, has_player: bool = False) -> None:
+                 min_room_height: int = 5, randomness: float = 0.5, has_player: bool = False,
+                 has_enemies: bool = False) -> None:
         """
         The __init__ function for the Dungeon class.
 
@@ -35,6 +38,7 @@ class Dungeon(object):
             min_room_height (int): Minimum room height.
             randomness (float): Percentage of randomness 0 to 100.
             has_player (bool): Is there a player in this dungeon.
+            has_enemies (bool): Are there enemies in this dungeon.
         """
         self._width = width
         self._height = height
@@ -51,6 +55,7 @@ class Dungeon(object):
         self._rooms = []
 
         self._has_player = has_player
+        self._has_enemies = has_enemies
 
         if random_seed is not None:
             random.seed(random_seed)
@@ -71,8 +76,13 @@ class Dungeon(object):
         self._remove_dead_ends()
 
         self._player = None
+        self._player_room_number = None
         if self.has_player:
-            self.add_player()
+            self._add_player()
+
+        self._enemies = []
+        if self.has_enemies:
+            self._generate_enemies()
 
     @property
     def width(self) -> int:
@@ -102,6 +112,16 @@ class Dungeon(object):
     def player(self) -> Player:
         """This dungeons player object."""
         return self._player
+
+    @property
+    def has_enemies(self) -> bool:
+        """Does this dungeon have enemies."""
+        return self._has_enemies
+
+    @property
+    def enemies(self) -> List[Enemy]:
+        """Dungeon enemies."""
+        return self._enemies
 
     def _set_dungeon_cell(self, x: int, y: int, value: str) -> None:
         """A function to set the value of a specified dungeon cell.
@@ -332,10 +352,10 @@ class Dungeon(object):
                 print(self._get_dungeon_cell(x, y), end='')
             print('')
 
-    def add_player(self) -> None:
+    def _add_player(self) -> None:
         """Add a player to the dungeon."""
-        room_number = random.randint(0, len(self._rooms) - 1)
-        room = self._rooms[room_number]
+        self._player_room_number = random.randint(0, len(self._rooms) - 1)
+        room = self._rooms[self._player_room_number]
         self._player = Player(x=room.x, y=room.y, name='main_player')
 
     def _player_can_move(self, direction: directions.Direction) -> bool:
@@ -352,7 +372,7 @@ class Dungeon(object):
         destination_y = self.player.y + direction.y
         destination = self._get_dungeon_cell(destination_x, destination_y)
 
-        if destination in [self.DUNGEON_WALL, self.PLAYER_PIECE]:
+        if destination in [self.DUNGEON_WALL]:
             return False
         return True
 
@@ -364,4 +384,18 @@ class Dungeon(object):
             direction (direction.Direction): The direction to move the player.
         """
         if self._player_can_move(direction):
-            self.player.move_player(direction)
+            self.player.move(direction)
+
+    def _generate_enemies(self) -> None:
+        """Generate enemies in the dungeon."""
+        for room in self._rooms:
+            if self.has_player and room is self._rooms[self._player_room_number]:
+                continue
+            number_of_enemies = random.randint(1, 3)
+            for _ in range(number_of_enemies):
+                enemy = Enemy(
+                    x=random.randint(room.x_min, room.x_max - 1),
+                    y=random.randint(room.y_min, room.y_max - 1),
+                    threat_level=random.randint(0, 10),
+                )
+                self._enemies.append(enemy)

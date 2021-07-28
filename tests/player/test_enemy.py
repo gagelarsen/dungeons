@@ -9,28 +9,27 @@ from dungeons.pieces import Enemy
 
 def test_basic_enemy() -> None:
     """Test basic enemy."""
-    enemy = Enemy(x=56, y=99, name='test_enemy')
+    enemy = Enemy(x=56, y=99)
     assert enemy.x == 56
     assert enemy.y == 99
-    assert enemy.name == 'test_enemy'
 
 
 def test_move_enemy() -> None:
     """Test moving the enemy."""
-    enemy = Enemy(x=50, y=50, name='moving_enemy')
+    enemy = Enemy(x=50, y=50)
 
-    enemy.move_enemy(directions.UP)
+    enemy.move(directions.UP)
     assert enemy.x == 50
     assert enemy.y == 49
 
-    enemy.move_enemy(directions.LEFT)
+    enemy.move(directions.LEFT)
     assert enemy.x == 49
     assert enemy.y == 49
 
-    enemy.move_enemy(directions.DOWN)
+    enemy.move(directions.DOWN)
     assert enemy.x == 49
     assert enemy.y == 50
 
-    enemy.move_enemy(directions.RIGHT)
+    enemy.move(directions.RIGHT)
     assert enemy.x == 50
     assert enemy.y == 50

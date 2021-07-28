@@ -8,23 +8,18 @@ from dungeons.geometry.directions import Direction
 
 class Enemy(object):
     """A class to represent a player in the dungeon."""
-    def __init__(self, x: int, y: int, name: str) -> None:
+    def __init__(self, x: int, y: int, threat_level: int = 1) -> None:
         """
         Init function for the Player class.
 
         Args:
             x (int): X location.
             y (int): Y location.
-            name (str): Player name.
+            threat_level (int): Enemy threat level.
         """
         self._x: int = x
         self._y: int = y
-        self._name: str = name
-
-    @property
-    def name(self) -> str:
-        """Player name."""
-        return self._name
+        self._threat_level: int = threat_level
 
     @property
     def x(self) -> int:
@@ -36,7 +31,7 @@ class Enemy(object):
         """Players y location."""
         return self._y
 
-    def move_player(self, direction: Direction) -> None:
+    def move(self, direction: Direction) -> None:
         """
         Move the players current position.
 
