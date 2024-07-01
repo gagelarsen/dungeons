@@ -316,6 +316,8 @@ class Dungeon(object):
 
     def _remove_dead_ends(self) -> None:
         """Remove maze dead ends."""
+        if len(self._rooms) == 0:
+            return
         for y in range(0, self._height):
             for x in range(0, self._width):
                 self._remove_dead_ends_helper(x, y)
@@ -350,9 +352,12 @@ class Dungeon(object):
 
     def _add_player(self) -> None:
         """Add a player to the dungeon."""
-        self._player_room_number = random.randint(0, len(self._rooms) - 1)
-        room = self._rooms[self._player_room_number]
-        self._player = Player(x=room.x, y=room.y, name='main_player')
+        if len(self._rooms) == 0:
+            self._player = Player(x=1, y=1, name='main_player')
+        else:
+            self._player_room_number = random.randint(0, len(self._rooms) - 1)
+            room = self._rooms[self._player_room_number]
+            self._player = Player(x=room.x, y=room.y, name='main_player')
 
     def _player_can_move(self, direction: directions.Direction) -> bool:
         """Can the player move in a specified direction.
