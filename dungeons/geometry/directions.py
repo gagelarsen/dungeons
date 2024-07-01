@@ -8,8 +8,7 @@ class Direction(object):
     """Information class about directions used the dungeon generator."""
 
     def __init__(self, x: int, y: int) -> None:
-        """
-        __init__ function for the Direction class.
+        """__init__ function for the Direction class.
 
         Args:
             x: The direction x.

@@ -1,5 +1,4 @@
-"""
-Tests for the player class.
+"""Tests for the player class.
 
 This file was created on July 27, 2021
 """

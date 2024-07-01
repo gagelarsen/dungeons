@@ -1,5 +1,4 @@
-"""
-Enemy code.
+"""Enemy code.
 
 This file was created on July 27, 2021
 """
@@ -10,8 +9,7 @@ class Enemy(object):
     """A class to represent a player in the dungeon."""
 
     def __init__(self, x: int, y: int, threat_level: int = 1) -> None:
-        """
-        Init function for the Player class.
+        """Init function for the Player class.
 
         Args:
             x (int): X location.
@@ -33,8 +31,7 @@ class Enemy(object):
         return self._y
 
     def move(self, direction: Direction) -> None:
-        """
-        Move the players current position.
+        """Move the players current position.
 
         Args:
             direction (Direction): The direction the player should move.

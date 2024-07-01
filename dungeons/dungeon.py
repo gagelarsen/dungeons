@@ -24,8 +24,7 @@ class Dungeon(object):
                  max_room_width: int = 10, max_room_height: int = 10, min_room_width: int = 5,
                  min_room_height: int = 5, randomness: float = 0.5, has_player: bool = False,
                  has_enemies: bool = False) -> None:
-        """
-        __init__ function for the Dungeon class.
+        """__init__ function for the Dungeon class.
 
         Args:
             width (int): Width of the dungeon.
@@ -134,8 +133,7 @@ class Dungeon(object):
         self.dungeon[y][x] = value
 
     def _get_dungeon_cell(self, x: int, y: int) -> str:
-        """
-        Get the value of a specified dungeon cell.
+        """Get the value of a specified dungeon cell.
 
         Args:
             x (int): The x location of the dungeon.
@@ -283,8 +281,7 @@ class Dungeon(object):
                     break
 
     def _can_carve_entry(self, x: int, y: int, incoming_direction: directions.Direction) -> bool:
-        """
-        Check if an entry can be carved.
+        """Check if an entry can be carved.
 
         Args:
             x (int): The x location to check.
@@ -324,8 +321,7 @@ class Dungeon(object):
                 self._remove_dead_ends_helper(x, y)
 
     def _remove_dead_ends_helper(self, x: int, y: int) -> None:
-        """
-        Remove dead ends helper fuction.
+        """Remove dead ends helper fuction.
 
         Args:
             x: x location to remove dead ends.
@@ -359,8 +355,7 @@ class Dungeon(object):
         self._player = Player(x=room.x, y=room.y, name='main_player')
 
     def _player_can_move(self, direction: directions.Direction) -> bool:
-        """
-        Can the player move in a specified direction.
+        """Can the player move in a specified direction.
 
         Args:
             direction (directions.Direction): Direction the player wants to move.
@@ -377,8 +372,7 @@ class Dungeon(object):
         return True
 
     def move_player(self, direction: directions.Direction) -> None:
-        """
-        Move the dungeon players position.
+        """Move the dungeon players position.
 
         Args:
             direction (direction.Direction): The direction to move the player.
