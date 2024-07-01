@@ -68,4 +68,4 @@ jobs:
       - name: Tests on ${{ matrix.platform }} - Python ${{ matrix.python-version }}
         run: |
           pytest --cov dungeons --cov-report=term-missing
-          coverage report --show-missing
+          coverage report --show-missing --skip-covered --omit=dungeons/__version__.py --fail-under 100
