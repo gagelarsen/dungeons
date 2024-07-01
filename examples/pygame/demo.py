@@ -28,9 +28,16 @@ HEIGHT = 20
 MARGIN = 5
 
 # MY CODE
-dungeon_width = 35
-dungeon_height = 35
-dungeon = Dungeon(width=dungeon_width, height=dungeon_height, random_seed=2, has_player=True, has_enemies=True)
+dungeon_width = 50
+dungeon_height = 50
+
+room_attempts = 10
+
+randomness = 0.4
+
+dungeon = Dungeon(width=dungeon_width, height=dungeon_height, random_seed=2,
+                  room_attempts=room_attempts, has_player=True, has_enemies=True,
+                  randomness=randomness)
 
 # Create a 2 dimensional array. A two dimensional
 # array is simply a list of lists.
@@ -76,7 +83,9 @@ while not done:
             column = pos[0] // (WIDTH + MARGIN)
             row = pos[1] // (HEIGHT + MARGIN)
             # Set that location to one
-            dungeon = Dungeon(35, 35, has_player=True, has_enemies=True)
+            dungeon = Dungeon(width=dungeon_width, height=dungeon_height,
+                              room_attempts=room_attempts, has_player=True, has_enemies=True,
+                              randomness=randomness)
             grid = dungeon.dungeon
             print("Click ", pos, "Grid coordinates: ", row, column)
         elif event.type == pygame.KEYUP:
