@@ -7,24 +7,29 @@ assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+## Summary
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+(Summarize the bug encountered concisely)
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+## Steps to reproduce
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+(How one can reproduce the issue - this is very important)
 
-**Desktop (please complete the following information):**
- - OS: [e.g. ubuntu-18.04]
+## What is the current bug behavior?
 
-**Additional context**
-Add any other context about the problem here.
+(What actually happens)
+
+## What is the expected correct behavior?
+
+(What you should see instead)
+
+## Relevant logs and/or screenshots
+
+(Paste any relevant logs - use code blocks (```) to format console output, logs, and code, as
+it's very hard to read otherwise.)
+
+## Possible fixes
+
+(If you can, link to the line of code that might be responsible for the problem)
+
+/label ~bug ~reproduced ~needs-investigation
