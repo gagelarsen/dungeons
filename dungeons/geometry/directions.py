@@ -5,7 +5,8 @@ This file was generated on June 04, 2020
 
 
 class Direction(object):
-    """A class to hold information about directions used the dungeon generator."""
+    """Information class about directions used the dungeon generator."""
+
     def __init__(self, x: int, y: int) -> None:
         """
         __init__ function for the Direction class.

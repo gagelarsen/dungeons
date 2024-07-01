@@ -8,6 +8,7 @@ from dungeons.geometry.directions import Direction
 
 class Player(object):
     """A class to represent a player in the dungeon."""
+
     def __init__(self, x: int, y: int, name: str) -> None:
         """
         Init function for the Player class.

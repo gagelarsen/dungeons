@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dungeons"
+description = "A dungeon crawler generator"
+readme = "README.md"
+requires-python = ">=3.11"
+dynamic = ["version"]
+
+dependencies = [
+    'pygame'
+]
+
+[tool.setuptools.packages.find]
+include = ["dungeons*"]
+
+[tool.setuptools_scm]
+write_to = "dungeons/__version__.py"
+
+[tool.setuptools.dynamic]
+version = {attr = "dungeons.__version__.__version__"}
+
+[tool.black]
+line-length = 120
+target-version = ['py312']
+include = '\.pyi?$'
+exclude = '''
+/(
+    .git
+  | __pycache__
+  | .venv
+  | .env
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+py_version = "auto"
+
+[tool.flake8]
+max-line-length = 120
+exclude = [
+    ".git",
+    "__pycache__",
+    ".venv",
+    ".env",
+    "build",
+    "dist",
+]
+ignore = [
+    "E203", # whitespace before ':' (conflicts with black)
+    "W503", # line break before binary operator (conflicts with black)
+]

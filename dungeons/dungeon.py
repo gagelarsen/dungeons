@@ -25,7 +25,7 @@ class Dungeon(object):
                  min_room_height: int = 5, randomness: float = 0.5, has_player: bool = False,
                  has_enemies: bool = False) -> None:
         """
-        The __init__ function for the Dungeon class.
+        __init__ function for the Dungeon class.
 
         Args:
             width (int): Width of the dungeon.
@@ -124,7 +124,7 @@ class Dungeon(object):
         return self._enemies
 
     def _set_dungeon_cell(self, x: int, y: int, value: str) -> None:
-        """A function to set the value of a specified dungeon cell.
+        """Set the value of a specified dungeon cell.
 
         Args:
             x (int): The specified x coordinate.
@@ -135,7 +135,7 @@ class Dungeon(object):
 
     def _get_dungeon_cell(self, x: int, y: int) -> str:
         """
-        A function to get the value of a specified dungeon cell.
+        Get the value of a specified dungeon cell.
 
         Args:
             x (int): The x location of the dungeon.
@@ -147,7 +147,7 @@ class Dungeon(object):
         return self.dungeon[y][x]
 
     def _generate_rooms(self) -> None:
-        """A function to generate random rooms."""
+        """Generate random rooms."""
         for _ in range(self._room_attempts):
             # Get Random Dimensions for New Room
             x = random.randint(1, self._width - 1)
@@ -176,14 +176,14 @@ class Dungeon(object):
                     self._set_dungeon_cell(x, y, self.DUNGEON_ROOM)
 
     def _carve_passages(self) -> None:
-        """A function to carve passages in the maze."""
+        """Carve passages in the maze."""
         # Loop through the dungeon to create maze.
         for y in range(1, self._height):
             for x in range(1, self._width):
                 self._carve_passage_helper(x, y)
 
     def _carve_passage_helper(self, start_x: int, start_y: int, last_direction: directions.Direction = None) -> None:
-        """A helper for carving the dungeon passages.
+        """Carving the dungeon passages helper function.
 
         Args:
             start_x (int): the starting x coordinate for the passageway.
@@ -245,7 +245,7 @@ class Dungeon(object):
         return True
 
     def _open_rooms(self) -> None:
-        """A function to open the rooms to the passageways."""
+        """Open the rooms to the passageways."""
         # Loop Through Rooms
         for room in self._rooms:
             possible_directions = [x for x in directions.DPAD_DIRECTIONS]
@@ -325,7 +325,7 @@ class Dungeon(object):
 
     def _remove_dead_ends_helper(self, x: int, y: int) -> None:
         """
-        Helper for removing dead ends.
+        Remove dead ends helper fuction.
 
         Args:
             x: x location to remove dead ends.
@@ -345,7 +345,7 @@ class Dungeon(object):
                     self._remove_dead_ends_helper(connections[0][0], connections[0][1])
 
     def print_dungeon(self) -> None:
-        """A function to print the dungeon to standard out."""
+        """Print the dungeon to standard out."""
         # Print Room in dungeon
         for y in range(0, self._height):
             for x in range(0, self._width):

@@ -7,8 +7,9 @@ from typing import Tuple
 
 class Rectangle(object):
     """A class for basic rectangle functions."""
+
     def __init__(self, height: int, width: int, x: int = 0, y: int = 0) -> None:
-        """The __init__ function for the Rectangle class."""
+        """__init__ function for the Rectangle class."""
         self._height: int = height
         self._width: int = width
         self._x: int = x
@@ -121,7 +122,7 @@ class Rectangle(object):
         return True
 
     def __eq__(self, other: 'Rectangle') -> bool:
-        """The equal operator for a rectangle."""
+        """Equal operator for a rectangle."""
         if type(other) is not Rectangle:
             return False
         if self is other:
