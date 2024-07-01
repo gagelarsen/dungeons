@@ -20,10 +20,10 @@ jobs:
     steps:
       # Checkout Sources
       - name: Checkout Sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       # Setup Python
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
       # Install Python Dependencies
@@ -33,7 +33,7 @@ jobs:
           pip install flake8 flake8-bugbear flake8-docstrings flake8-import-order flake8-colors flake8-pyproject pep8-naming
       # Run Flake
       - name: Flake Code
-        run: flake8 .
+        run: flake8 . --application-package-names dungeons --docstring-convention google --import-order-style=appnexus
 
   # Tests
   tests:
@@ -45,15 +45,15 @@ jobs:
       fail-fast: false
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: [3.10, 3.11, 3.12]
+        python-version: ['3.10', '3.11', '3.12']
 
     steps:
       # Checkout Sources
       - name: Checkout Sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       # Setup Python
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
       # Install Python Dependencies
