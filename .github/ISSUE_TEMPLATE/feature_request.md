@@ -7,14 +7,21 @@ assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+### Description
+This merge request addresses...
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+### Changes Made to Code:
+ - Change 1
+ - Change 2
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+### Related
+Provide link to task or issue..
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+### Additional Notes
+Any extra needed information..
+
+### Quality Checks
+ - [ ] New code is 100% tested
+ - [ ] Code has been formated
+ - [ ] Code has been linted
+ - [ ] Docstrings for new methods have been added
