@@ -25,21 +25,62 @@ def test_dungeon_randomness_min() -> None:
 
 def test_print_dungeon(capsys: object) -> None:
     """A test to check the printing of the dungeon."""
-    dungeon = Dungeon(width=20, height=10, random_seed=2)
+    dungeon = Dungeon(width=30, height=20, random_seed=2)
     dungeon.print_dungeon()
     captured = capsys.readouterr()
 
     expected = \
-        'XXXXXXXXXXXXXXXXXXXX\n' \
-        'XXXXXXXXXXXXXXXXXXXX\n' \
-        'XX     X     X     X\n' \
-        'XX     X     $     X\n' \
-        'XX     X     X     X\n' \
-        'XX     X     X     X\n' \
-        'XX     $     $     X\n' \
-        'XX     XXXXXXX     X\n' \
-        'XX     XXXXXXX     X\n' \
-        'XXXXXXXXXXXXXXXXXXXX\n'
+        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n' \
+        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n' \
+        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n' \
+        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n' \
+        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n' \
+        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n' \
+        'XXXXXXXXXXXX          XXXXXXXX\n' \
+        'X          X          XXXXXXXX\n' \
+        'X          X          XXXXXXXX\n' \
+        'X          $          XXXXXXXX\n' \
+        'X          X          XXXXXXXX\n' \
+        'X          X          XXXXXXXX\n' \
+        'XXXXXXXXXXXX          XXXXXXXX\n' \
+        'X         XX          XXXXXXXX\n' \
+        'X         XX          XXXXXXXX\n' \
+        'X         XX          XXXXXXXX\n' \
+        'X         XXXXXXXX$XXXXXXXXXXX\n' \
+        'X         $*****X**XXXXXXXXXXX\n' \
+        'XXXXXXXXXXXXXXX***XXXXXXXXXXXX\n' \
+        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n'
+
+    assert captured.out == expected
+
+
+def test_print_dungeon_no_rooms(capsys: object) -> None:
+    """A test to check the printing of the dungeon."""
+    dungeon = Dungeon(width=30, height=20, random_seed=2, room_attempts=0, has_player=True)
+    dungeon.print_dungeon()
+    captured = capsys.readouterr()
+
+    expected = \
+        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n' \
+        'X*XX*X*************X*********X\n' \
+        'X******X*XXXXXXXXX*XX*X*XXXXXX\n' \
+        'X*XXXXXXXX*******X*X**X******X\n' \
+        'XXX*****X**X*XXX*X*XXXXXXXXX*X\n' \
+        'XX**XXX*XXXX*X***X**X*****X**X\n' \
+        'X**XX*X******XXXXXX*X*XXX*XX*X\n' \
+        'X*XX**XXX*XXXX******X*X*X*X**X\n' \
+        'X*XXX***X*X****XXXXXX*X*X*XX*X\n' \
+        'X***X*XXX*X*XXXX******X*X*XX*X\n' \
+        'X*X*X*****X*X*XXXXXX*XX*X**X*X\n' \
+        'X*X*XXXXXXX*X********X**XX*X*X\n' \
+        'X*X*X*******X*XX*XXXXXX**X*X*X\n' \
+        'X*X*X*XXXXXXX**X**X*X*X*XX*X*X\n' \
+        'XXX*X*X*X*X*X*XXX*X********X*X\n' \
+        'X***X*X*X*******X*X*XXXXXXXX*X\n' \
+        'X*XXX*X***XXXXXXX*X********X*X\n' \
+        'X**XX*XXXXXX****X*XXXXXXXX*X*X\n' \
+        'XX***********XX***X**********X\n' \
+        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n'
 
     assert captured.out == expected
 
